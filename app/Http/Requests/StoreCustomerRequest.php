@@ -27,11 +27,10 @@ class StoreCustomerRequest extends FormRequest
 
             // Email is required, must look like a valid email, and must be
             // unique in the customers table (no duplicate customer records)
-            'email' => ['required', 'email', 'unique:customers,email'],
+            'email' => ['required','email','regex:/^[^@\s]+@[^@\s]+\.[a-zA-Z]{2,}$/','unique:customers,email'],
 
-            // Phone is required, must be text, max 20 characters
-            // (covers international formats with country codes, spaces, dashes)
-            'phone' => ['required', 'string', 'max:20'],
+            // regex ensures exactly 10 digits, numbers only — matches Sri Lankan phone format
+            'phone' => ['required', 'string', 'regex:/^[0-9]{10}$/'],
 
             // Address is optional (nullable) — customer may not provide it immediately
             'address' => ['nullable', 'string'],
@@ -52,7 +51,9 @@ class StoreCustomerRequest extends FormRequest
             'email.required' => 'Customer email is required.',
             'email.email' => 'Please enter a valid email address.',
             'email.unique' => 'This email is already registered to another customer.',
+            'email.regex' => 'Please enter a complete email address (e.g. name@example.com).',
             'phone.required' => 'Customer phone number is required.',
+            'phone.regex' => 'Phone number must be exactly 10 digits.',
         ];
     }
 }

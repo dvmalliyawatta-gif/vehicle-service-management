@@ -8,6 +8,15 @@ import { useState } from 'react';
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
 
+    // The list of role names for the logged-in user, e.g. ['admin']
+    // Comes from the "roles" data we just added in HandleInertiaRequests.php
+    const roles = usePage().props.auth.roles;
+
+    // Small helper: checks if the current user has a specific role
+    function hasRole(role) {
+        return roles.includes(role);
+    }
+
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
@@ -23,6 +32,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </Link>
                             </div>
 
+                            {/* Navigation links — shown based on role */}
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     href={route('dashboard')}
@@ -30,6 +40,19 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
+
+                                {/* Customers link — only Admin and Service Advisor can see this */}
+                                {(hasRole('admin') || hasRole('service-advisor')) && (
+                                    <NavLink
+                                        href={route('customers.index')}
+                                        active={route().current('customers.*')}
+                                    >
+                                        Customers
+                                    </NavLink>
+                                )}
+
+                                {/* Placeholder links for future modules — Vehicles, Mechanics, Bookings, etc.
+                                    will be added here once those modules are built in later tasks */}
                             </div>
                         </div>
 
@@ -121,6 +144,7 @@ export default function AuthenticatedLayout({ header, children }) {
                     </div>
                 </div>
 
+                {/* Mobile menu — same role-based logic applied here too */}
                 <div
                     className={
                         (showingNavigationDropdown ? 'block' : 'hidden') +
@@ -134,6 +158,15 @@ export default function AuthenticatedLayout({ header, children }) {
                         >
                             Dashboard
                         </ResponsiveNavLink>
+
+                        {(hasRole('admin') || hasRole('service-advisor')) && (
+                            <ResponsiveNavLink
+                                href={route('customers.index')}
+                                active={route().current('customers.*')}
+                            >
+                                Customers
+                            </ResponsiveNavLink>
+                        )}
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4">

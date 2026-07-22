@@ -30,12 +30,13 @@ class UpdateCustomerRequest extends FormRequest
             // $this->customer refers to the customer being updated,
             // passed in automatically via route model binding.
             'email' => [
-                'required',
-                'email',
-                Rule::unique('customers', 'email')->ignore($this->customer),
-            ],
+                            'required',
+                            'email',
+                            'regex:/^[^@\s]+@[^@\s]+\.[a-zA-Z]{2,}$/',
+                            Rule::unique('customers', 'email')->ignore($this->customer),
+                        ],
 
-            'phone' => ['required', 'string', 'max:20'],
+            'phone' => ['required', 'string', 'regex:/^[0-9]{10}$/'],
             'address' => ['nullable', 'string'],
             'notes' => ['nullable', 'string'],
         ];
@@ -51,7 +52,9 @@ class UpdateCustomerRequest extends FormRequest
             'email.required' => 'Customer email is required.',
             'email.email' => 'Please enter a valid email address.',
             'email.unique' => 'This email is already registered to another customer.',
+            'email.regex' => 'Please enter a complete email address (e.g. name@example.com).',
             'phone.required' => 'Customer phone number is required.',
+            'phone.regex' => 'Phone number must be exactly 10 digits.',
         ];
     }
 }

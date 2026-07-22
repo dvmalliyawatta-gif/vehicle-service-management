@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 // Customer management — ONLY Admin and Service Advisor can access these routes.
 // The 'role:' middleware checks against the roles we seeded earlier.
 // Mechanics will be blocked from even loading these pages.
-Route::middleware(['auth', 'role:admin,service-advisor'])->group(function () {
+Route::middleware(['auth', 'role:admin|service-advisor'])->group(function () {
     Route::resource('customers', CustomerController::class);
 });
 
