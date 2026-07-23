@@ -59,6 +59,17 @@ export default function AuthenticatedLayout({ header, children }) {
                                         Vehicles
                                     </NavLink>
                                 )}
+
+                                {/* Mechanics — admin & advisor can view; only admin can manage */}
+                                {(hasRole('admin') || hasRole('service-advisor')) && (
+                                    <NavLink
+                                        href={route('mechanics.index')}
+                                        active={route().current('mechanics.*')}
+                                    >
+                                        Mechanics
+                                    </NavLink>
+                                )}
+
                             </div>
                         </div>
 
@@ -186,6 +197,17 @@ export default function AuthenticatedLayout({ header, children }) {
                                 Vehicles
                             </ResponsiveNavLink>
                         )}
+
+                        {/* Mechanics — admin & advisor can view; only admin can manage */}
+                        {(hasRole('admin') || hasRole('service-advisor')) && (
+                            <ResponsiveNavLink
+                                href={route('mechanics.index')}
+                                active={route().current('mechanics.*')}
+                            >
+                                Mechanics
+                            </ResponsiveNavLink>
+                        )}
+                        
                     </div>
 
                     {/* mobile user info + logout */}
