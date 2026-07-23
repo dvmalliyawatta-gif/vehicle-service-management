@@ -3,6 +3,7 @@
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\MechanicController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,6 +38,11 @@ Route::middleware(['auth', 'role:admin|service-advisor'])->group(function () {
 // Vehicle management — Admin & Advisor can manage; Mechanic can view only.
 Route::middleware(['auth', 'role:admin|service-advisor|mechanic'])->group(function () {
     Route::resource('vehicles', VehicleController::class);
+});
+
+// Mechanic management — Admin & Advisor can view; ONLY Admin can create/edit/delete.
+Route::middleware(['auth', 'role:admin|service-advisor'])->group(function () {
+    Route::resource('mechanics', MechanicController::class);
 });
 
 require __DIR__.'/auth.php';
