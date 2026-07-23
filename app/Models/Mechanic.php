@@ -14,6 +14,7 @@ class Mechanic extends Model
         'employee_id',
         'specialization',
         'contact',
+        'address',
     ];
 
     // Relationship to job_cards will be added later,

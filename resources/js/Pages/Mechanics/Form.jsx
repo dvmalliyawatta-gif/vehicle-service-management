@@ -9,6 +9,7 @@ export default function Form({ mechanic = null }) {
         employee_id: mechanic?.employee_id || '',
         specialization: mechanic?.specialization || '',
         contact: mechanic?.contact || '',
+        address: mechanic?.address || '',
     });
 
     function handleSubmit(e) {
@@ -67,6 +68,17 @@ export default function Form({ mechanic = null }) {
                     className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
                 />
                 {errors.contact && <p className="text-red-600 text-sm mt-1">{errors.contact}</p>}
+            </div>
+
+            <div>
+                <label className="block text-sm font-medium text-gray-700">Address</label>
+                <textarea
+                    value={data.address}
+                    onChange={(e) => setData('address', e.target.value)}
+                    className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                    rows={2}
+                />
+                {errors.address && <p className="text-red-600 text-sm mt-1">{errors.address}</p>}
             </div>
 
             <button

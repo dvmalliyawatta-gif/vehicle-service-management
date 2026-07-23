@@ -47,6 +47,10 @@ export default function Show({ mechanic }) {
                                 <dt className="text-sm font-medium text-gray-500">Contact</dt>
                                 <dd className="text-gray-900">{mechanic.contact}</dd>
                             </div>
+                            <div>
+                                <dt className="text-sm font-medium text-gray-500">Address</dt>
+                                <dd className="text-gray-900">{mechanic.address || '—'}</dd>
+                            </div>
                         </dl>
 
                     </div>

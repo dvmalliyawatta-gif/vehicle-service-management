@@ -33,6 +33,9 @@ class UpdateMechanicRequest extends FormRequest
 
             // phone number, same 10-digit format as customer phone
             'contact' => ['required', 'string', 'regex:/^[0-9]{10}$/'],
+
+            // optional — mechanic may not have this on file immediately
+            'address' => ['nullable', 'string'],
         ];
     }
 
