@@ -7,11 +7,8 @@ import { useState } from 'react';
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
-
-    // The list of role names for the logged-in user, e.g. ['admin']
     const roles = usePage().props.auth.roles;
 
-    // checks if user has a given role
     function hasRole(role) {
         return roles.includes(role);
     }
@@ -40,7 +37,6 @@ export default function AuthenticatedLayout({ header, children }) {
                                     Dashboard
                                 </NavLink>
 
-                                {/* Customers — admin & advisor only */}
                                 {(hasRole('admin') || hasRole('service-advisor')) && (
                                     <NavLink
                                         href={route('customers.index')}
@@ -50,7 +46,6 @@ export default function AuthenticatedLayout({ header, children }) {
                                     </NavLink>
                                 )}
 
-                                {/* Vehicles — admin, advisor, mechanic (view-only for mechanic) */}
                                 {(hasRole('admin') || hasRole('service-advisor') || hasRole('mechanic')) && (
                                     <NavLink
                                         href={route('vehicles.index')}
@@ -60,7 +55,6 @@ export default function AuthenticatedLayout({ header, children }) {
                                     </NavLink>
                                 )}
 
-                                {/* Mechanics — admin & advisor can view; only admin can manage */}
                                 {(hasRole('admin') || hasRole('service-advisor')) && (
                                     <NavLink
                                         href={route('mechanics.index')}
@@ -70,10 +64,17 @@ export default function AuthenticatedLayout({ header, children }) {
                                     </NavLink>
                                 )}
 
+                                {hasRole('admin') && (
+                                    <NavLink
+                                        href={route('users.index')}
+                                        active={route().current('users.*')}
+                                    >
+                                        Users
+                                    </NavLink>
+                                )}
                             </div>
                         </div>
 
-                        {/* user dropdown (name, profile, logout) */}
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
                             <div className="relative ms-3">
                                 <Dropdown>
@@ -119,7 +120,6 @@ export default function AuthenticatedLayout({ header, children }) {
                             </div>
                         </div>
 
-                        {/* mobile menu toggle button */}
                         <div className="-me-2 flex items-center sm:hidden">
                             <button
                                 onClick={() =>
@@ -178,7 +178,6 @@ export default function AuthenticatedLayout({ header, children }) {
                             Dashboard
                         </ResponsiveNavLink>
 
-                        {/* Customers — admin & advisor only */}
                         {(hasRole('admin') || hasRole('service-advisor')) && (
                             <ResponsiveNavLink
                                 href={route('customers.index')}
@@ -188,7 +187,6 @@ export default function AuthenticatedLayout({ header, children }) {
                             </ResponsiveNavLink>
                         )}
 
-                        {/* Vehicles — admin, advisor, mechanic (view-only for mechanic) */}
                         {(hasRole('admin') || hasRole('service-advisor') || hasRole('mechanic')) && (
                             <ResponsiveNavLink
                                 href={route('vehicles.index')}
@@ -198,7 +196,6 @@ export default function AuthenticatedLayout({ header, children }) {
                             </ResponsiveNavLink>
                         )}
 
-                        {/* Mechanics — admin & advisor can view; only admin can manage */}
                         {(hasRole('admin') || hasRole('service-advisor')) && (
                             <ResponsiveNavLink
                                 href={route('mechanics.index')}
@@ -207,10 +204,17 @@ export default function AuthenticatedLayout({ header, children }) {
                                 Mechanics
                             </ResponsiveNavLink>
                         )}
-                        
+
+                        {hasRole('admin') && (
+                            <ResponsiveNavLink
+                                href={route('users.index')}
+                                active={route().current('users.*')}
+                            >
+                                Users
+                            </ResponsiveNavLink>
+                        )}
                     </div>
 
-                    {/* mobile user info + logout */}
                     <div className="border-t border-gray-200 pb-1 pt-4">
                         <div className="px-4">
                             <div className="text-base font-medium text-gray-800">
