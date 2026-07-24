@@ -4,6 +4,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\MechanicController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,6 +44,11 @@ Route::middleware(['auth', 'role:admin|service-advisor|mechanic'])->group(functi
 // Mechanic management — Admin & Advisor can view; ONLY Admin can create/edit/delete.
 Route::middleware(['auth', 'role:admin|service-advisor'])->group(function () {
     Route::resource('mechanics', MechanicController::class);
+});
+
+// User management — Admin ONLY. No other role can access this at all.
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('users', UserController::class)->except(['show']);
 });
 
 require __DIR__.'/auth.php';
